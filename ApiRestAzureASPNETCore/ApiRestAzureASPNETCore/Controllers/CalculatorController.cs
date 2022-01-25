@@ -20,7 +20,7 @@ namespace ApiRestAzureASPNETCore.Controllers
         }
 
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
-        public IActionResult sum(string firstNumber, string secondNumber)
+        public IActionResult Sum(string firstNumber, string secondNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
@@ -32,7 +32,7 @@ namespace ApiRestAzureASPNETCore.Controllers
         }
 
         [HttpGet("sub/{firstNumber}/{secondNumber}")]
-        public IActionResult sub(string firstNumber, string secondNumber)
+        public IActionResult Subtract(string firstNumber, string secondNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
@@ -44,7 +44,7 @@ namespace ApiRestAzureASPNETCore.Controllers
         }
 
         [HttpGet("mult/{firstNumber}/{secondNumber}")]
-        public IActionResult mult(string firstNumber, string secondNumber)
+        public IActionResult Multiply(string firstNumber, string secondNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
@@ -56,7 +56,7 @@ namespace ApiRestAzureASPNETCore.Controllers
         }
 
         [HttpGet("div/{firstNumber}/{secondNumber}")]
-        public IActionResult div(string firstNumber, string secondNumber)
+        public IActionResult Divide(string firstNumber, string secondNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
@@ -68,7 +68,7 @@ namespace ApiRestAzureASPNETCore.Controllers
         }
 
         [HttpGet("avg/{firstNumber}/{secondNumber}")]
-        public IActionResult avg(string firstNumber, string secondNumber)
+        public IActionResult Average(string firstNumber, string secondNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
@@ -80,7 +80,7 @@ namespace ApiRestAzureASPNETCore.Controllers
         }
 
         [HttpGet("sqrt/{number}")]
-        public IActionResult sqrt(string number)
+        public IActionResult SquareRoot(string number)
         {
             if (IsNumeric(number))
             {
