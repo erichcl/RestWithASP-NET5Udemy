@@ -1,4 +1,5 @@
 ﻿using ApiRestAzureASPNETCore.Model;
+using ApiRestAzureASPNETCore.Model.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,61 +11,64 @@ namespace ApiRestAzureASPNETCore.Services.Implementations
     public class PersonServiceImplementation : IPersonService
     {
 
-        private volatile int count;
+        private MySQLContext _context;
+
+        public PersonServiceImplementation(MySQLContext context)
+        {
+            _context = context;
+
+        }
 
         public Person Create(Person person)
         {
+            try {
+                _context.Persons.Add(person);
+                _context.SaveChanges();
+
+            } 
+            catch (Exception) {
+                throw;
+            }
             return person;
         }
 
         public void Delete(long Id)
         {
-            
+            Person? dbPerson = FindById(Id);
+            if (dbPerson != null) {
+                _context.Persons.Remove(dbPerson);
+                _context.SaveChanges();
+            }
         }
 
         public List<Person> FindAll()
         {
-            List<Person> persons = new List<Person>();
-            for (int i = 0; i < 8; i++)
-            {
-                Person person = MockPerson(i);
-                persons.Add(person);
-            }
-            return persons;
+            return _context.Persons.ToList();
         }
 
         public Person FindById(long id)
         {
-            return new Person { 
-                Id = IncrementAndGet(),
-                FirstName = "FirstName",
-                LastName = "LastName",
-                Address = "Addr Street N 123",
-                Gender = "Male"
-            };
+            return _context.Persons.SingleOrDefault(x => x.Id.Equals(id));
 
         }
 
         public Person Update(Person person)
         {
-            return person;
-        }
 
-        private Person MockPerson(int i)
-        {
-            return new Person
+            Person? dbPerson = FindById(person.Id);
+            if (dbPerson == null) return new Person();
+            try
             {
-                Id = IncrementAndGet(),
-                FirstName = "FirstName" + i,
-                LastName = "LastName" + i,
-                Address = "Addr Street N 123" + i,
-                Gender = "Male"
-            };
-        }
 
-        private long IncrementAndGet()
-        {
-            return Interlocked.Increment(ref count);
+                _context.Entry(dbPerson).CurrentValues.SetValues(person);
+                _context.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return person;
         }
     }
 }
