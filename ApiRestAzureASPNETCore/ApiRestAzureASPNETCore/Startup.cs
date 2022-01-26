@@ -35,6 +35,8 @@ namespace ApiRestAzureASPNETCore
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection), null));
 
+            services.AddApiVersioning();
+
             services.AddScoped<IPersonService, PersonServiceImplementation>();
         }
 
